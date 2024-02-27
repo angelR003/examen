@@ -3,7 +3,7 @@ import gymDao from '../dao/gym.dao.js';
 export const getAll = (req, res) => {
     gymDao.getAll()
     .then(gyms => {
-        res.render('../src/views/index',{gyms: gyms});
+        res.render('./src/views/index',{gyms: gyms});
     })
     .catch(err => {
         res.status(500).json({ message: err.message });
@@ -14,7 +14,7 @@ export const getAll = (req, res) => {
 export const getxNum = (req, res) => {
     gymDao.getxNum(req.params.numCliente)
     .then(gyms => {
-        res.render('../src/views/index',{gyms: gyms});
+        res.render('./src/views/index',{gyms: gyms});
     })
     .catch(err => {
         res.status(500).json({ message: err.message });
@@ -24,7 +24,7 @@ export const getxNum = (req, res) => {
 export const insert = (req, res) => {
     gymDao.insert(req.body)
     .then(gym => {
-        res.render('../src/views/index',{gyms: gym});
+        res.render('./src/views/index',{gyms: gym});
     })
     .catch(err => {
         res.status(500).json({ message: err.message });
@@ -52,4 +52,6 @@ export const remove = (req, res) => {
     });
 }
   
+
+
 
