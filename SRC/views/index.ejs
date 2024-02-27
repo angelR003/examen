@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gimnasio</title>
+
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #333;
+            color: #fff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .logo {
+            max-width: 200px;
+            margin: 0 auto;
+        }
+
+        .content {
+            padding: 20px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section-header {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .section-content {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 5px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .horarios-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.horarios-table th, .horarios-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+.horarios-table th {
+    background-color: #333;
+    color: #fff;
+}
+
+.horarios-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.horarios-table tbody tr:hover {
+    background-color: #ddd;
+}
+
+
+
+#gym-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+#gym-table th, #gym-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+#gym-table th {
+    background-color: #333;
+    color: #fff;
+}
+
+#gym-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#gym-table tbody tr:hover {
+    background-color: #ddd;
+}
+
+#gym-table .ui-btn {
+    display: block;
+    margin: auto;
+    text-align: center;
+}
+
+
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img class="logo" src="https://marketplace.canva.com/EAF1lvjTYEg/2/0/1600w/canva-logotipo-producto-levantamiento-de-pesas-vida-sana-ilustraci%C3%B3n-de-mano-blanco-y-negro-dsTwWCkbhPs.jpg" alt="Logo del gimnasio">
+            <h1>Bienvenido al Gimnasio </h1>
+        </div>
+
+        <div class="content">
+            <div class="section">
+                <h2 class="section-header">clientes</h2>
+
+                <div data-role="content">
+                    <form action="/api/gyms" method="post">
+                        <input type="number" name="numCliente" placeholder="Ingresa el numero del cliente">
+                        <input type="text" name="nombre" placeholder="Ingrese el nombre del cliente">
+                        <input type="text" name="direccion" placeholder="ingrese la direccion del cliente">
+                        <input type="text" name="telefono"placeholder="Ingrese el numero del telefono">
+                        <label for="slider-1" name="edad" type="text" >Seleccione la edad:</label>
+                        <input type="range" name="slider-1" id="slider-1" value="50" min="0" max="100" data-highlight="true">
+                        <input type="text" name="apellidop" placeholder="Ingrese el apellido paterno">
+                        <input type="text" name="apellidoM" placeholder="Ingrese el apellido materno">
+                        <button class="ui-shadow ui-btn ui-corner-all" type="submit" id="submit-2" onclick="alert('cliente guardado con exito')">Guardar</button>
+                    </form>
+                </div>
+
+
+
+
+                <table data-role="table" id="gym-table" data-mode="columntoggle" class="ui-responsive table-stroke">
+                    <thead>
+                        <tr>
+                            <th data-priority="1">Número de Cliente</th>
+                            <th data-priority="2">Nombre</th>
+                            <th data-priority="3">Dirección</th>
+                            <th data-priority="4">Teléfono</th>
+                            <th data-priority="5">Edad</th>
+                            <th data-priority="6">Apellido Paterno</th>
+                            <th data-priority="7">Apellido Materno</th>
+                            <th data-priority="8">Editar</th>
+                            <th data-priority="9">Eliminar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% gyms.forEach((gym) => { %>
+                            <tr>
+                                <td><%= gym.numCliente %></td>
+                                <td><%= gym.nombre %></td>
+                                <td><%= gym.direccion %></td>
+                                <td><%= gym.telefono %></td>
+                                <td><%= gym.edad %></td>
+                                <td><%= gym.apellidoP %></td>
+                                <td><%= gym.apellidoM %></td>
+                                <td><a class="ui-btn" href="/api/gyms/<%= gym.numCliente %>">Editar</a></td>
+                                <td>
+                                    <form action="/api/gyms/borrarCliente/<%= gym.numCliente %>" method="post">
+                                        <button type="submit">Eliminar</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+                
+
+
+            </div>
+
+            <div class="section">
+                <h2 class="section-header">Horarios</h2>
+                <div class="section-content">
+                    <table class="horarios-table">
+                        <thead>
+                            <tr>
+                                <th>Día</th>
+                                <th>Horario</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Lunes</td>
+                                <td>9:00 AM - 9:00 PM</td>
+                            </tr>
+                            <tr>
+                                <td>Martes</td>
+                                <td>9:00 AM - 9:00 PM</td>
+                            </tr>
+                            <tr>
+                                <td>Miércoles</td>
+                                <td>9:00 AM - 9:00 PM</td>
+                            </tr>
+                            <tr>
+                                <td>Jueves</td>
+                                <td>9:00 AM - 9:00 PM</td>
+                            </tr>
+                            <tr>
+                                <td>Viernes</td>
+                                <td>9:00 AM - 9:00 PM</td>
+                            </tr>
+                            <tr>
+                                <td>Sábado</td>
+                                <td>10:00 AM - 7:00 PM</td>
+                            </tr>
+                            <tr>
+                                <td>Domingo</td>
+                                <td>Cerrado</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="footer">
+            <p>&copy; 2024 Gimnasio </p>
+        </div>
+    </div>
+
+
+    
+
+
+
+
+
+</body>
+</html>
